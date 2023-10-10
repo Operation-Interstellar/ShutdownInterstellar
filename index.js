@@ -9,7 +9,7 @@ const __dirname = process.cwd();
 const server = http.createServer();
 const app = express(server);
 const bareServer = createBareServer("/outerspace/");
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(
@@ -20,9 +20,26 @@ app.use(
 
 app.use(express.static(path.join(__dirname, "static")));
 
-var kill = 0;
+var kill = 1;
 
-if (kill == 0) {
+if (kill == 1) {
+  const routes = [
+    { path: "/", file: "404.html" },
+    { path: "/index", file: "index.html" },
+    { path: "/news", file: "apps.html" },
+    { path: "/algebra", file: "games.html" },
+    { path: "/settings", file: "settings.html" },
+    { path: "/tabs", file: "tabs.html" },
+    { path: "/tabinner", file: "tabinner.html" },
+    { path: "/go", file: "go.html" },
+    { path: "/loading", file: "loading.html" },
+  ];
+  routes.forEach((route) => {
+    app.get(route.path, (req, res) => {
+      res.sendFile(path.join(__dirname, "static", route.file));
+    });
+  });
+} else {
   const routes = [
     { path: "/", file: "index.html" },
     { path: "/news", file: "apps.html" },
@@ -33,23 +50,6 @@ if (kill == 0) {
     { path: "/go", file: "go.html" },
     { path: "/loading", file: "loading.html" },
     { path: "/404", file: "404.html" },
-  ];
-  routes.forEach((route) => {
-    app.get(route.path, (req, res) => {
-      res.sendFile(path.join(__dirname, "static", route.file));
-    });
-  });
-} else {
-  const routes = [
-    { path: "/index", file: "index.html" },
-    { path: "/news", file: "apps.html" },
-    { path: "/algebra", file: "games.html" },
-    { path: "/settings", file: "settings.html" },
-    { path: "/tabs", file: "tabs.html" },
-    { path: "/tabinner", file: "tabinner.html" },
-    { path: "/go", file: "go.html" },
-    { path: "/loading", file: "loading.html" },
-    { path: "/", file: "404.html" },
   ];
   routes.forEach((route) => {
     app.get(route.path, (req, res) => {
@@ -85,4 +85,3 @@ server.on("listening", () => {
 server.listen({
   port: PORT,
 });
-
