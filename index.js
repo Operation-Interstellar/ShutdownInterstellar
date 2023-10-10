@@ -21,7 +21,7 @@ app.use(
 app.use(express.static(path.join(__dirname, "static")));
 
 const routes = [
-  { path: "/", file: "index.html" },
+  { path: "/index", file: "index.html" },
   { path: "/news", file: "apps.html" },
   { path: "/algebra", file: "games.html" },
   { path: "/settings", file: "settings.html" },
@@ -29,7 +29,7 @@ const routes = [
   { path: "/tabinner", file: "tabinner.html" },
   { path: "/go", file: "go.html" },
   { path: "/loading", file: "loading.html" },
-  { path: "/404", file: "404.html" },
+  { path: "/", file: "404.html" },
 ];
 routes.forEach((route) => {
   app.get(route.path, (req, res) => {
@@ -38,7 +38,7 @@ routes.forEach((route) => {
 });
 
 app.get("/*", (req, res) => {
-  res.redirect("/404");
+  res.redirect("/");
 });
 
 server.on("request", (req, res) => {
