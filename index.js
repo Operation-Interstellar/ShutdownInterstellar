@@ -20,23 +20,43 @@ app.use(
 
 app.use(express.static(path.join(__dirname, "static")));
 
-const routes = [
-  { path: "/", file: "index.html" },
-  { path: "/news", file: "apps.html" },
-  { path: "/algebra", file: "games.html" },
-  { path: "/settings", file: "settings.html" },
-  { path: "/tabs", file: "tabs.html" },
-  { path: "/tabinner", file: "tabinner.html" },
-  { path: "/go", file: "go.html" },
-  { path: "/loading", file: "loading.html" },
-  { path: "/404", file: "404.html" },
-];
+var kill = 0;
 
-routes.forEach((route) => {
-  app.get(route.path, (req, res) => {
-    res.sendFile(path.join(__dirname, "static", route.file));
+if (kill == 0) {
+  const routes = [
+    { path: "/", file: "index.html" },
+    { path: "/news", file: "apps.html" },
+    { path: "/algebra", file: "games.html" },
+    { path: "/settings", file: "settings.html" },
+    { path: "/tabs", file: "tabs.html" },
+    { path: "/tabinner", file: "tabinner.html" },
+    { path: "/go", file: "go.html" },
+    { path: "/loading", file: "loading.html" },
+    { path: "/404", file: "404.html" },
+  ];
+  routes.forEach((route) => {
+    app.get(route.path, (req, res) => {
+      res.sendFile(path.join(__dirname, "static", route.file));
+    });
   });
-});
+} else {
+  const routes = [
+    { path: "/index", file: "index.html" },
+    { path: "/news", file: "apps.html" },
+    { path: "/algebra", file: "games.html" },
+    { path: "/settings", file: "settings.html" },
+    { path: "/tabs", file: "tabs.html" },
+    { path: "/tabinner", file: "tabinner.html" },
+    { path: "/go", file: "go.html" },
+    { path: "/loading", file: "loading.html" },
+    { path: "/", file: "404.html" },
+  ];
+  routes.forEach((route) => {
+    app.get(route.path, (req, res) => {
+      res.sendFile(path.join(__dirname, "static", route.file));
+    });
+  });
+}
 
 app.get("/*", (req, res) => {
   res.redirect("/404");
